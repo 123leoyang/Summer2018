@@ -2,13 +2,54 @@ package leo.yang;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
-//hi
+
 public class ArrayPlayground {
+	
+	public static int getMaxValue(int[] array) {
+	    int maxValue = array[0];
+	    for (int i = 1; i < array.length; i++) {
+	        if (array[i] > maxValue) {
+	            maxValue = array[i];
+	        }
+	    }
+	    return maxValue;
+	}
+
+	public static int getMinValue(int[] array) {
+	    int minValue = array[0];
+	    for (int i = 1; i < array.length; i++) {
+	        if (array[i] < minValue) {
+	            minValue = array[i];
+	        }
+	    }
+	    return minValue;
+	}
+	
 	public static void fill(int[] a) {
 		for (int i = 0; i < a.length; i++) {
 			a[i] = i + 1;
 		}
 	}
+	public static void fillRandom(int[] a) {
+		fillRandom(a, 100);
+	}
+	
+	public static void fillRandom(int[] a, int boundary) {
+		for (int i = 0; i < a.length; i++) {
+			ThreadLocalRandom random = ThreadLocalRandom.current();
+			a[i] = random.nextInt(boundary);
+		}
+	}
+	
+	public static boolean checkOrder(int[] a) {
+		for(int i = 1; i < a.length; i++) {
+			if(a[i-1]>a[i]){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 
 	public static void print(int[] a) {
 		System.out.println(Arrays.toString(a));

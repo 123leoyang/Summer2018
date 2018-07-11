@@ -1,13 +1,13 @@
 package leo.yang;
 
 public class QuickSort {
-	private static void swap(int[] a, int x, int y) {
+	public static void swap(int[] a, int x, int y) {
 		if (x == y) {
 			return;
 		}
-		int temp = a[y];
-		a[y] = a[x];
-		a[x] = temp;
+		int temp = a[x];
+        a[x] = a[y];
+        a[y] = temp;
 	}
 	private static int partition(int[] a, int start, int end) {
 		end--;
