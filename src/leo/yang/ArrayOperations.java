@@ -1,6 +1,53 @@
 package leo.yang;
 
 public class ArrayOperations {
+	private static int findPivot(int[] a, int lowBound, int highBound) {
+//		check basic cases
+		if (highBound < lowBound) {
+			return -1;
+		}
+//		check special case
+		if (highBound == lowBound) {
+			return lowBound;
+		}
+		
+//		recursive find mid - check 2 sides every time
+		int mid = (lowBound + highBound)/2;  
+//		mid check for upper half
+	       if (mid < highBound && a[mid] > a[mid + 1]) {
+	           return mid;
+	       }
+//	      mid check for lower half
+	       if (mid > lowBound && a[mid] < a[mid - 1]) {
+	           return (mid-1);
+	       }
+//	       if mid is not on the separators
+	       if (a[lowBound] >= a[mid]) {
+	           return findPivot(a, lowBound, mid-1);
+	       } else {
+	    	   return findPivot(a, mid + 1, highBound);
+	       }
+	}
+	public static int rotatedSearch(int a[], int bound, int x) {
+		int pivot = findPivot(a, 0, bound-1);
+//		no rotation in array
+		if (pivot == -1) {
+			return BinarySearch.search(a, x);
+		}
+//		pivot contains desired value
+		if (a[pivot] == x) {
+			return pivot;
+		}
+//		recursively call for two separate situations
+//		pivot is above desired
+		if(a[0] <= x) {
+			return BinarySearch.search(a, 0, pivot-1, x);
+		}
+//		pivot is below desired
+		else {
+			return BinarySearch.search(a, pivot+1, bound-1, x);
+		}
+	}
 	private static void swapSingleElement(int[] a) {
 		int l = a.length;
 		int[] temp = new int[l];
@@ -92,9 +139,9 @@ public class ArrayOperations {
 		int numCount = 10;
 		int[] x = new int[numCount];
 		ArrayPlayground.fill(x);
-		swapIterate(x, 4);
+		swapIterate(x, 7);
 		ArrayPlayground.print(x);
-
+		System.out.println(rotatedSearch(x, x.length, 4));
 	}
 
 }

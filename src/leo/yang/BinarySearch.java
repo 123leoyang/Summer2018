@@ -1,8 +1,22 @@
 package leo.yang;
 
 public class BinarySearch {
-	
+	public static int search(int arr[], int lowBound, int highBound, int x)
+    {
+	       if (highBound < lowBound)
+	           return - 1;  
+	       int mid = (lowBound + highBound)/2;  
+	       if (x == arr[mid]) {
+	           return mid;
+	       }
+	       if (x > arr[mid]) {
+	           return search(arr, (mid + 1), highBound, x);
+	       } else {
+	    	   return search(arr, lowBound, (mid -1), x);
+	       }
+	    }
 	public static int search(int[] a, int x) {
+		/* 
 		int l = a.length;
 		int first = 0;
 		int last = l;
@@ -30,20 +44,21 @@ public class BinarySearch {
 			if(first >= (last-1)) {
 				return -1;
 			}
-		}
+		} */
+		return search(a, 0, a.length-1, x);
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//int[] x = new int[10];
-		int[] x= {7,7,7,7,7,7,7,7,7,7};
+		int[] x= {77,12,13,14,10,16,13,15,12};
 		//ArrayPlayground.fillRandom(x);
 		ArrayPlayground.print(x);
-		ArrayPlayground.shuffle(x);
-		ArrayPlayground.print(x);
+		//ArrayPlayground.shuffle(x);
+		//ArrayPlayground.print(x);
 		HeapSort.sort(x);
 		ArrayPlayground.print(x);
-		int found = search(x, 7);
+		int found = search(x, 77);
 		if (found == -1) {
 			System.out.println("Not Found");
 		} else {
