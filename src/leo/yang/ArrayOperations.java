@@ -1,6 +1,41 @@
 package leo.yang;
 
 public class ArrayOperations {
+	public static void findMin(int[] a) {
+		
+	}
+	public static int findMin(int[] a, int lowBound, int highBound) {
+        // is not rotated at all
+        if (highBound < lowBound)  return a[0];
+ 
+        // If there is only one element left
+        if (highBound == lowBound) return a[lowBound];
+ 
+        // Find mid
+        int mid = lowBound + (highBound - lowBound)/2; /*(low + high)/2;*/
+ 
+        // Check if element (mid+1) is minimum element. Consider
+        // the cases like {3, 4, 5, 1, 2}
+        if (mid < highBound && a[mid+1] < a[mid])
+            return a[mid+1];
+ 
+        // Check if mid itself is minimum element
+        if (mid > lowBound && a[mid] < a[mid - 1])
+            return a[mid];
+ 
+        // Decide whether we need to go to left half or right half
+        if (a[highBound] > a[mid])
+            return findMin(a, lowBound, mid-1);
+        return findMin(a, mid+1, highBound);
+	}
+	public static void rotateArray(int[] a, int n) {
+		int swaps = n%a.length;
+		swapIterate(a, swaps);
+	}
+	public static int findRotations(int[] a) {
+		int min = findMin(a, 0, a.length-1);
+		return (a.length-(rotatedSearch(a, a.length, min)));
+	}
 	private static int findPivot(int[] a, int lowBound, int highBound) {
 //		check basic cases
 		if (highBound < lowBound) {
@@ -142,6 +177,8 @@ public class ArrayOperations {
 		swapIterate(x, 7);
 		ArrayPlayground.print(x);
 		System.out.println(rotatedSearch(x, x.length, 4));
+		System.out.println(findRotations(x));
+		System.out.println(findMin(x, 0, x.length-1));
 	}
 
 }
