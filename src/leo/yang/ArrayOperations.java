@@ -1,8 +1,36 @@
 package leo.yang;
 
 public class ArrayOperations {
-	public static void findMin(int[] a) {
-		
+	public static int findHammingDistance(int[] a) {
+		int l = a.length;
+		int[] copy = new int[2 * l + 1];
+
+//		copy elements twice for all rotations possible <== sorta dumb | save space by rotating everytime, but I'm too lazy
+		for (int i = 0; i < l; i++) {
+			copy[i] = a[i];
+			copy[l + i] = a[i];
+		}
+
+//		set a ceiling for the max Hamming distance
+		int maxDis = 0;
+//		go through each rotation
+		for (int i = 1; i < l; i++) {
+			int countDis = 0;
+//			go through each possible change
+			for (int j = 0; j < l; j++) {
+//				check if they're different
+				if (copy[j + i] != a[j]) {
+					countDis++;
+				}
+				// We can never get more than n.
+				if (countDis == l) {
+					return l;
+				}
+//			"refresh" maximum "hams"
+				maxDis = Math.max(maxDis, countDis);
+			}
+		}
+		return maxDis;
 	}
 	public static int findMin(int[] a, int lowBound, int highBound) {
         // is not rotated at all
@@ -179,6 +207,8 @@ public class ArrayOperations {
 		System.out.println(rotatedSearch(x, x.length, 4));
 		System.out.println(findRotations(x));
 		System.out.println(findMin(x, 0, x.length-1));
+		int[] y = {2, 4, 6, 8};
+		System.out.println(findHammingDistance(y));
 	}
 
 }
