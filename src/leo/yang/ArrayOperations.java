@@ -1,6 +1,36 @@
 package leo.yang;
 
 public class ArrayOperations {
+	public static int findMinOfThree(int a, int b, int c) {
+		return Math.min(a, Math.min(b, c));
+	}
+	public static int editDist(String s1, String s2) {
+		int m = s1.length();
+		int n = s2.length();
+		
+		//store each individual outcome
+		int[][] store = new int[m+1][n+1];
+		
+		for (int i=0; i<=m; i++)
+        {
+            for (int j=0; j<=n; j++)
+            {
+                if (i==0) {
+                    store[i][j] = j; 
+                }
+                else if (j==0) {
+                    store[i][j] = i; 
+                }
+                else if (s1.charAt(i-1) == s2.charAt(j-1)) {
+                    store[i][j] = store[i-1][j-1];
+                }
+                else {
+                    store[i][j] = 1 + findMinOfThree(store[i][j-1], store[i-1][j], store[i-1][j-1]); 
+                }
+            }
+        }
+		return store[m][n];
+	}
 	public static int findHammingDistance(int[] a) {
 		int l = a.length;
 		int[] copy = new int[2 * l + 1];
@@ -204,11 +234,12 @@ public class ArrayOperations {
 		ArrayPlayground.fill(x);
 		swapIterate(x, 7);
 		ArrayPlayground.print(x);
-		System.out.println(rotatedSearch(x, x.length, 4));
-		System.out.println(findRotations(x));
-		System.out.println(findMin(x, 0, x.length-1));
+		System.out.println("search for Index @ 4: " + rotatedSearch(x, x.length, 4));
+		System.out.println("rotated amount of array: " + findRotations(x));
+		System.out.println("minimum of array: " + findMin(x, 0, x.length-1));
 		int[] y = {2, 4, 6, 8};
-		System.out.println(findHammingDistance(y));
+		System.out.println("Hamming Distance of {2, 4, 6, 8}: " + findHammingDistance(y));
+		System.out.println("Edit distance of hello and bello: " + editDist("hello", "bello"));
 	}
 
 }
